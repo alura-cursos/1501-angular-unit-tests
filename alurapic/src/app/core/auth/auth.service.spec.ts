@@ -4,10 +4,12 @@ import {
   HttpTestingController
 } from "@angular/common/http/testing";
 import { TestBed } from "@angular/core/testing";
+import { UserService } from "../user/user.service";
 
 describe("O serviço AuthService", () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +18,7 @@ describe("O serviço AuthService", () => {
     });
     service = TestBed.get(AuthService);
     httpMock = TestBed.get(HttpTestingController);
+    userService = TestBed.get(UserService);
   });
 
   it("deve ser instanciado", () => {
@@ -29,9 +32,19 @@ describe("O serviço AuthService", () => {
       email: "alvaro@alura.com"
     };
 
+    spyOn(userService, "setToken").and.returnValue(null);
+
     service.authenticate("alvaro", "1234").subscribe(response => {
       expect(response.body).toEqual(fakeBody);
       expect(response.headers.get("x-acess-token")).toBe("tokenTest");
+    });
+
+    const request = httpMock.expectOne(req => {
+      return req.method === "POST";
+    });
+
+    request.flush(fakeBody, {
+      headers: { "x-acess-token": "tokenTest" }
     });
   });
 });
