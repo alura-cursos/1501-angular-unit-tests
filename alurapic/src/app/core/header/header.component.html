@@ -1,0 +1,33 @@
+<header class="sticky-top">
+  <nav class="navbar navbar-light bg-white">
+    <a class="navbar-brand">
+      <i
+        tabindex="0"
+        (keyup.space)="menu.toggle()"
+        (click)="menu.toggle()"
+        class="fa fa-bars mr-2"
+      ></i>
+      ALURAPIC
+    </a>
+    <app-menu #menu>
+      <ul class="list-unstyled">
+        <li>
+          <a showIfLogged [routerLink]="['p', 'add']">Upload</a>
+        </li>
+      </ul>
+    </app-menu>
+
+    <div *ngIf="(user$ | async) as user; else login">
+      <i class="fa fa-user-circle mr-1"></i>
+      <a class="mr-1">{{ user.name }}</a> <a (click)="logout()">(Logout)</a>
+    </div>
+  </nav>
+
+  <ng-template #login>
+    <span class="navbar-text"> <a [routerLink]="['']">Please, login!</a> </span>
+  </ng-template>
+  <div class="fixed-top">
+    <app-loading></app-loading>
+    <app-alert></app-alert>
+  </div>
+</header>

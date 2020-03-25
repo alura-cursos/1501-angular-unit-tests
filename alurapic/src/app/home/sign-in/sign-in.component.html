@@ -1,0 +1,40 @@
+<h4 class="text-center">Login</h4>
+
+<form class="form mt-4" [formGroup]="loginForm" (submit)="login()">
+  <div class="form-group">
+    <input
+      class="form-control"
+      placeholder="user name"
+      autofocus
+      formControlName="userName"
+      #userNameInput
+    />
+    <app-vmessage
+      *ngIf="!!loginForm.get('userName').errors?.required"
+      text="User name is required"
+    ></app-vmessage>
+  </div>
+
+  <div class="form-group">
+    <input
+      type="password"
+      class="form-control"
+      placeholder="password"
+      formControlName="password"
+    />
+    <app-vmessage
+      *ngIf="loginForm.get('password').errors"
+      text="A password is required !"
+    ></app-vmessage>
+  </div>
+
+  <button
+    [disabled]="loginForm.invalid"
+    type="submit"
+    class="btn btn-primary btn-block"
+  >
+    login
+  </button>
+</form>
+
+<p>Not a user? <a [routerLink]="['signup']"> Sign Up!</a></p>
