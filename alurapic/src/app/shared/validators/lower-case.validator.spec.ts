@@ -6,4 +6,8 @@ describe("A função isLowerCase", () => {
     const resultado = isLowerCase(valor);
     expect(resultado).toBeTruthy();
   });
+
+  it("deve validar quando o valor enviado não for caixa baixa", () => {
+    expect(isLowerCase("Mario")).toBeFalsy();
+  });
 });
