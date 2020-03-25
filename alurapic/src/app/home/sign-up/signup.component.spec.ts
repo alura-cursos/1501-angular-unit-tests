@@ -6,9 +6,13 @@ import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { VMessageModule } from "src/app/shared/componets/vmessage/vmessage.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterTestingModule } from "@angular/router/testing";
+import { Router } from "@angular/router";
+import { of, throwError } from "rxjs";
 
 describe("O formulário SignUp", () => {
   let component: SignUpComponent;
+  let router: Router;
+  let signupService: SignUpService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -24,6 +28,8 @@ describe("O formulário SignUp", () => {
   }));
 
   beforeEach(() => {
+    router = TestBed.get(Router);
+    signupService = TestBed.get(SignUpService);
     const fixture = TestBed.createComponent(SignUpComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -31,5 +37,16 @@ describe("O formulário SignUp", () => {
 
   it("deve ser instanciado", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("deve cadastrar um usuario", () => {
+    const navigateSpy = spyOn(router, "navigate");
+    spyOn(signupService, "signup").and.returnValue(of(null));
+    component.signupForm.get("email").setValue("alvaro@alvaro.com");
+    component.signupForm.get("fullName").setValue("Alvaro");
+    component.signupForm.get("userName").setValue("alvaro");
+    component.signupForm.get("password").setValue("123");
+    component.signUp();
+    expect(navigateSpy).toHaveBeenCalledWith([""]);
   });
 });
