@@ -49,4 +49,17 @@ describe("O formulário SignUp", () => {
     component.signUp();
     expect(navigateSpy).toHaveBeenCalledWith([""]);
   });
+
+  it("deve realizar o log caso ocorra algum erro", () => {
+    spyOn(signupService, "signup").and.returnValue(
+      throwError("Erro de Servidor")
+    );
+    component.signupForm.get("email").setValue("alvaro@alvaro.com");
+    component.signupForm.get("fullName").setValue("Alvaro");
+    component.signupForm.get("userName").setValue("alvaro");
+    component.signupForm.get("password").setValue("123");
+    const spyLog = spyOn(console, "log");
+    component.signUp();
+    expect(spyLog).toHaveBeenCalledWith("Erro de Servidor");
+  });
 });
