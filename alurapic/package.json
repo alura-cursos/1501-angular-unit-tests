@@ -23,7 +23,7 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
-    "i": "^0.3.6",
+    "i": "^0.3.7",
     "jwt-decode": "^2.2.0",
     "rxjs": "^6.5.3",
     "stacktrace-js": "^2.0.0",
